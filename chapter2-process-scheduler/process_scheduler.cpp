@@ -80,6 +80,10 @@ int process_finish(pcb *q);
 
 int main()
 {
+#if defined(_WIN16) || defined(_WIN32) || defined(_WIN64)
+    // change code page，use utf-8
+    system("chcp 65001");
+#endif
     display_menu();
     int k;
     scanf("%d", &k);
@@ -385,15 +389,15 @@ void display_round(pcb *p)
          << "STATE   |" << endl;
     while (p)
     {
-        cout<< setw(4)  << p->name;
+        cout << setw(4) << p->name;
         cout << " | ";
-        cout<< setw(7)  << p->cputime;
+        cout << setw(7) << p->cputime;
         cout << " | ";
-        cout<< setw(8)  << p->needtime;
+        cout << setw(8) << p->needtime;
         cout << " | ";
-        cout<< setw(5)  << p->count;
+        cout << setw(5) << p->count;
         cout << " | ";
-        cout<< setw(6)  << p->round;
+        cout << setw(6) << p->round;
         cout << " | ";
         switch (p->process)
         {
