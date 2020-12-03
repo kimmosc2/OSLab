@@ -3,11 +3,13 @@
 #include <string.h>
 #include <stdbool.h>
 
+// function prototype
 void block();
 void wakeup();
 void show();
 void create();
 void kill();
+
 // simple process model
 struct process_type
 {
@@ -28,13 +30,13 @@ struct process_type
 };
 
 // memory
-struct process_type neicun[20];
+struct process_type memory[20];
 
 // current number of process
-int shumu = 0;
+int pnum = 0;
 
 // number of blocked process
-int zuses = 0;
+int blocked = 0;
 
 int pid;
 int flag = 0;
@@ -47,7 +49,7 @@ int main()
 #endif
     int num;
     for (int i = 0; i < 20; i++)
-        neicun[i].state = 0;
+        memory[i].state = 0;
     while (true)
     {
         printf("\n\n\n");
@@ -90,7 +92,7 @@ int main()
 void create()
 {
     // check process number
-    if (shumu >= 20)
+    if (pnum >= 20)
         printf("\n内存已满，请先唤醒或杀死进程n");
     else
     {
@@ -99,14 +101,14 @@ void create()
         {
 
             // 定位，找到可以还未创建的进程
-            if (neicun[i].state != 0)
+            if (memory[i].state != 0)
                 continue;
             printf("\n请输入新进程pid\n");
-            scanf("%d", &(neicun[i].pid));
+            scanf("%d", &(memory[i].pid));
 
             for (int j = 0; j < i; j++)
             {
-                if (neicun[i].pid == neicun[j].pid)
+                if (memory[i].pid == memory[j].pid)
                 {
                     printf("\n该进程已存在n");
                     return;
@@ -114,15 +116,15 @@ void create()
             }
 
             printf("\n请输入新进程优先级\n");
-            scanf("%d", &(neicun[i].priority));
+            scanf("%d", &(memory[i].priority));
             printf("\n请输入新进程大小\n");
-            scanf("%d", &(neicun[i].size));
+            scanf("%d", &(memory[i].size));
             printf("\n请输入新进程内容\n");
-            scanf("%s", &(neicun[i].content));
+            scanf("%s", &(memory[i].content));
 
             //创建进程，使标记位为1
-            neicun[i].state = 1;
-            shumu++;
+            memory[i].state = 1;
+            pnum++;
             break;
         }
     }
@@ -131,14 +133,14 @@ void show()
 {
     for (int i = 0; i < 20; i++)
     {
-        if (neicun[i].state == 1 || neicun[i].state == 2)
+        if (memory[i].state == 1 || memory[i].state == 2)
         {
             // printf running process information
-            printf("\npid=%d\t", neicun[i].pid);
-            printf("priority=%d\t", neicun[i].priority);
-            printf("size=%d\t", neicun[i].size);
-            printf("state=%d\t", neicun[i].state);
-            printf("content=%s", neicun[i].content);
+            printf("\npid=%d\t", memory[i].pid);
+            printf("priority=%d\t", memory[i].priority);
+            printf("size=%d\t", memory[i].size);
+            printf("state=%d\t", memory[i].state);
+            printf("content=%s", memory[i].content);
             flag = 1;
         }
     }
@@ -148,12 +150,12 @@ void show()
 
 void wakeup()
 {
-    if (!shumu)
+    if (!pnum)
     {
         printf("当前没有运行进程\n");
         return;
     }
-    if (!zuses)
+    if (!blocked)
     {
         printf("\n当前没有阻塞进程\n");
         return;
@@ -163,17 +165,17 @@ void wakeup()
     for (int i = 0; i < 20; i++)
     {
         //定位，找到所要唤醒的进程，根据其状态做相应处理
-        if (pid == neicun[i].pid)
+        if (pid == memory[i].pid)
         { // if block
-            if (neicun[i].state == 2)
+            if (memory[i].state == 2)
             {
                 // wake up
-                neicun[i].state = 1;
+                memory[i].state = 1;
                 // reduce block queue
-                zuses--;
+                blocked--;
                 printf("\n已经成功唤醒进程\n");
             }
-            else if (neicun[i].state == 0)
+            else if (memory[i].state == 0)
                 printf("\n要唤醒的进程不存在\"n");
             else
                 printf("\n要唤醒的进程已在运行\n");
@@ -187,7 +189,7 @@ void wakeup()
 }
 void kill()
 {
-    if (!shumu)
+    if (!pnum)
     {
         printf("当前没有运行进程\n");
         return;
@@ -197,15 +199,15 @@ void kill()
     for (int i = 0; i < 20; i++)
     {
         //定位，找到所要杀死的进程，根据其状态做相应处理
-        if (pid == neicun[i].pid)
+        if (pid == memory[i].pid)
         {
-            if (neicun[i].state == 1)
+            if (memory[i].state == 1)
             {
-                neicun[i].state = 0;
-                shumu--;
+                memory[i].state = 0;
+                pnum--;
                 printf("\n已成功杀死进程\n");
             }
-            else if (neicun[i].state == 0)
+            else if (memory[i].state == 0)
                 printf("\n:要杀死的进程不存在\n");
             else
                 printf("\n要杀死的进程已被阻塞\n");
@@ -220,7 +222,7 @@ void kill()
 
 void block()
 {
-    if (!shumu)
+    if (!pnum)
     {
         printf("\n当前没有运行进程\n");
         return;
@@ -230,16 +232,16 @@ void block()
     for (int i = 0; i < 20; i++)
     {
         //定位，找到所要block的进程
-        if (pid == neicun[i].pid)
+        if (pid == memory[i].pid)
         {
             flag = false;
-            if (neicun[i].state == 1)
+            if (memory[i].state == 1)
             {
-                neicun[i].state = 2;
-                zuses++;
+                memory[i].state = 2;
+                blocked++;
                 printf("\n已经成功阻塞进程\n");
             }
-            else if (neicun[i].state == 0)
+            else if (memory[i].state == 0)
                 printf("\n要阻塞的进程不存在\n");
             else
             {
