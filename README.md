@@ -6,9 +6,10 @@
 [chapter1-更改进程状态](./chapter1-process/process_state.c)  
 [chapter2-进程调度](./chapter2-process-scheduler/process_scheduler.cpp)  
 
-### 作者
-[BuTn](https://github.com/kimmosc2)
-
 
 ### License
 [MPL 2](./LICENSE)
+
+### 作者
+[BuTn](https://github.com/kimmosc2)  
+![微信公众号](./assets/atanstudy-search-QRCode.png)
