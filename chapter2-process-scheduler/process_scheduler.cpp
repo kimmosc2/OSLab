@@ -230,10 +230,26 @@ void cpuexe(pcb *q)
             tp = q->priority;
             t = q;
         }
+        // 如果所需时间过多,优先级会变为负数,下面这块逻辑会将负数优先级也加入迭代,配合下面的if,保证程序的正常执行
+        else if (0 >= q->priority && q->process != finish)
+        {
+            tp = q->priority;
+            t = q;
+        }
         q = q->next;
     }
-    // 模拟执行
-    if (t->needtime > 0)
+    // 模拟执行,这块代码保证在负优先级的情况下，将优先级置零，并执行,以保证程序正常执行
+    if (t->needtime > 0 && t->priority <= 0)
+    {
+        t->priority = 0;
+        // 减少需要时间
+        t->needtime--;
+        // 更改进程状态
+        t->process = execute;
+        // cpu执行时间增加
+        t->cputime++;
+    } // 模拟执行
+    else if (t->needtime > 0)
     {
         // 降低优先级
         t->priority -= P_STEP;
@@ -263,7 +279,7 @@ void prioritycal()
         cout << "\ncputime:" << cpu << endl;
         cpuexe(p);
         display(p);
-        Sleep(500);
+        Sleep(200);
     }
     printf("All processes have finished,press any key to exit");
     getch();
