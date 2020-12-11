@@ -79,19 +79,24 @@ int main()
                 return 0;
             }
         }
+
+        /* 预分配内存，如果系统不安全，下面会回收这部分内存,如果系统安全,后面
+            会把系统已占用资源连同这部分资源一起回收
+        */
         for (i = 0; i < resourceNum; i++)
         {
             Available[i] -= Request[mi][i];
             Allocation[mi][i] += Request[mi][i];
             Need[mi][i] -= Request[mi][i];
         }
+        /*  判断是否系统安全*/
         if (IsSafe())
         {
 
             cout << "同意分配请求！\n";
+            /* 回收申请的内存和本身程序占用的内存 */
             for (i = 0; i < resourceNum; i++)
             {
-
                 Available[i] += Request[mi][i] + Allocation[mi][i];
                 Finish[i] = 1;
                 Need[mi][i] = 0;
@@ -100,6 +105,7 @@ int main()
         else
         {
             cout << "你的请求被拒绝\n";
+            /* 不安全，回收刚刚预分配的内存 */
             for (i = 0; i < resourceNum; i++)
             {
                 Available[i] += Request[mi][i];
