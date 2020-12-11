@@ -1,5 +1,5 @@
 ### 关于本仓库
-本仓库为黄河科技学院-《操作系统》课程的配套Lab  
+本仓库为黄河科技学院-《操作系统》课程的配套Lab,不包括实验报告书  
 任课老师:傅群忠
 
 ### 目录
@@ -11,6 +11,9 @@
  - [process_scheduler.cpp](./chapter2-process-scheduler/process_scheduler.cpp)  
  - [流程图](./chapter2-process-scheduler/进程的两种调度方式.png)  
 
+### chaoter3-银行家算法
+ - [banker.cpp](./chapter3-banker'sAlgorithm/banker.cpp)
+ - [流程图](./chapter3-banker/banker.png)
 
 
 ### License
