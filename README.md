@@ -11,12 +11,16 @@
  - [process_scheduler.cpp](./chapter2-process-scheduler/process_scheduler.cpp)  
  - [流程图](./chapter2-process-scheduler/进程的两种调度方式.png)  
 
-#### chaoter3-银行家算法
+#### chapter3-银行家算法
  - [banker.cpp](./chapter3-banker/banker.cpp)  
  - [流程图](./chapter3-banker/banker.png)  
  - [示例输入1](./chapter3-banker/example.txt)  
  - [示例输入2](./chapter3-banker/example2.txt)  
-
+#### chapter4-虚拟存储管理器
+ - [swap.cpp](./chapter4-swap/swap.cpp)  
+ - [流程图](./chapter4-swap/lab4-page_swap.png)  
+ - [流程图源文件(draw.io)](./chapter4-swap/lab4-page_swap.drawio)  
+   
 ### License
 [MPL 2](./LICENSE)
 
