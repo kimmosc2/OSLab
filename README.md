@@ -16,11 +16,17 @@
  - [流程图](./chapter3-banker/banker.png)  
  - [示例输入1](./chapter3-banker/example.txt)  
  - [示例输入2](./chapter3-banker/example2.txt)  
+  
 #### chapter4-虚拟存储管理器
  - [swap.cpp](./chapter4-swap/swap.cpp)  
  - [流程图](./chapter4-swap/lab4-page_swap.png)  
  - [流程图源文件(draw.io)](./chapter4-swap/lab4-page_swap.drawio)  
-   
+
+#### chapter5-设备管理
+ - [equipment.c](./chapter5-equipment/equipment.c)  
+ - [流程图](./chapter5-equipment/equipment.png)  
+ - [流程图源文件(draw.io)](./chapter5-equipment/equipment.drawio)  
+  
 ### License
 [MPL 2](./LICENSE)
 
